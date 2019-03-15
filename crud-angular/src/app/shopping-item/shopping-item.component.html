@@ -1,0 +1,127 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+  </head>
+  
+  <body>
+
+    <div class="jumbotron">
+      <div class="container">
+        
+        <form #frm="ngForm" (ngSubmit)="addItem(frm)" *ngIf="!toggleForm">
+          <h2> <b>Add Item</b> </h2>
+              
+          <div class="form-group">
+            <label for="">Name:</label>
+            <input type="text" name="itemName" placeholder="Name" class="form-control" ngModel required>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group col-md-6">
+              <label for="">Quantity:</label>
+              <input type="number" name="itemQuantity" placeholder="Quantity" class="form-control" ngModel required>
+            </div>
+            
+            <div class="form-group col-md-6">
+              <label for="">Price:</label>
+              <input type="number" name="itemPrice" placeholder="Price" class="form-control" ngModel required>
+            </div>
+          </div>
+
+          <div style="text-align: center">
+            <button type="submit" class="btn btn-success" [disabled]="frm.invalid">Add Item</button>
+          </div>
+        </form>
+
+
+        <form #editForm="ngForm" (ngSubmit)="editItem(editForm)" *ngIf="toggleForm">
+          <h2> <b>Edit Item</b> </h2>
+              
+          <div class="form-group">
+            <label for="">Name:</label>
+            <input type="text" name="itemName" placeholder="Name" class="form-control" [ngModel]="selectedItem.itemName">
+          </div>
+
+          <div class="form-row">
+            <div class="form-group col-md-6">
+              <label for="">Quantity:</label>
+              <input type="number" name="itemQuantity" placeholder="Quantity" class="form-control" [ngModel]="selectedItem.itemQuantity">
+            </div>
+            
+            <div class="form-group col-md-6">
+              <label for="">Price:</label>
+              <input type="number" name="itemPrice" placeholder="Price" class="form-control" [ngModel]="selectedItem.itemPrice">
+            </div>
+          </div>
+
+          <div style="text-align: center">
+            <button type="submit" class="btn btn-success">Save</button>
+          </div>
+        </form>
+
+      </div>
+      
+    </div>
+
+    <h2 style="text-align: center">Shopping List</h2>
+    <div class="container" >
+      <div class="row">
+        <table class="table table-hover">
+          <thead class="thead-light">
+            <tr>
+              <th></th>
+              <th>Name</th>
+              <th>Quantity</th>
+              <th>Price</th>
+              <th>Total</th>
+              <th></th>
+              <th></th>
+            </tr>
+         </thead>
+         <tbody *ngFor="let data of shoppingItemList">
+          <tr>
+            <th>
+              <div class="col">
+                <input type="checkbox" name="" [checked]="data.itemBought" (click)="updateItemCheckBox(data)">
+              </div>
+            </th>
+            <th>
+              <div class="col">
+                {{data.itemName}}
+              </div>
+            </th>
+            <th>
+              <div class="col">
+                {{data.itemQuantity}}
+              </div>
+            </th>
+            <th>
+              <div class="col">
+                {{data.itemPrice}}
+              </div>
+            </th>
+            <th>
+              <div class="col">
+                {{data.itemQuantity * data.itemPrice}}
+              </div>
+            </th>
+            <th>
+              <div class="col">
+                <button type="button" class="btn btn-primary" (click)="showEditForm(data)" [disabled]="toggleForm">Edit</button>
+              </div>
+            </th>
+            <th>
+              <div class="col">
+                <button type="button" class="btn btn-danger" (click)="deleteItem(data._id)">Delete</button>
+              </div>
+            </th>
+          </tr>
+         </tbody>
+        </table> 
+      </div>        
+    </div>
+  </body>
+</html>
+
